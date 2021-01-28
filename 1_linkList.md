@@ -116,3 +116,37 @@ int deleteNode(node* mid)
 }
 ```
 
+## 例三：循环右移
+
+方法一：将链表闭合为循环链表，从中找到新的头结点，再改变其结构
+
+```c++
+/* node定义如例一所示 */
+node* rotateRight(node* head, int k) 
+{
+    //0.特殊情况
+    if (node == nullptr || node->next == nullptr) return nullptr;
+    //1.首先确定链表长度，从而确定好向右循环的个数
+    node* temp = head;
+    int count = 0;
+    while (temp->next != nullptr) {
+        ++count;
+        temp = temp->next;
+    }
+    k = k % count; // 倒数第k个结点即为头结点
+    //如果k==0，返回head
+    if (!k) return head;
+    temp->next = head; // 将链表闭合为循环链表
+    //2.定位倒数第k个节点
+    int num = count - k + 1;
+    node* ptr = head;
+    //3.将ptr在倒数第k个节点前一个停下，容易做接受上的改变
+    for (int i = 1; i < num - 1; ++i) {
+        ptr = ptr->next;
+    }
+    head = ptr->next;
+    ptr->next = nullptr;
+    return head;
+}
+```
+
